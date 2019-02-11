@@ -24,20 +24,32 @@ Point by point data.
 The Picture below is a screenshot of the csv file.
 ![default](https://user-images.githubusercontent.com/7829080/51440449-8634da80-1d0a-11e9-9282-b557f68e97af.jpg)
 
-# Usage
-Before executing the ScrapeNishikori.py, open the file and fix the following 2
+# Requirement
+- urllib2
+- re
+- unicodedata
+- pandas 
+- BeautifulSoup
+- selenium
+- lxml.html
+- time
 
-Change to the url of the bulletin board you want to obtain data
+# Usage
+1. Clone this repository or download ScrapeNishikori.py to your working directory.
+
+2. Before executing the ScrapeNishikori.py, open the file and edit the following two.
+
+3. Change to the url of the bulletin board you want to obtain data
 ```python
 url = "https://jbbs.shitaraba.net/bbs/read.cgi/sports/34934/1547509776/"
 ```
 
-Change the filename of the output file
+4. Change the filename of the output file
 ```python
 df.to_csv("201901Australian.csv")
 ```
 
-Execute the script file
+5. Execute the script file
 ```terminal
 ScrapeNishikori.py
 ```
