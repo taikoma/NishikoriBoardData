@@ -25,6 +25,7 @@ The Picture below is a screenshot of the csv file.
 ![default](https://user-images.githubusercontent.com/7829080/51440449-8634da80-1d0a-11e9-9282-b557f68e97af.jpg)
 
 # Requirement
+- python3
 - urllib2
 - re
 - unicodedata
@@ -51,5 +52,5 @@ df.to_csv("201901Australian.csv")
 
 5. Execute the script file
 ```terminal
-ScrapeNishikori.py
+python ScrapeNishikori.py
 ```
