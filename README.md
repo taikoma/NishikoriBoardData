@@ -4,6 +4,10 @@ This script gathers comment data of Kei Nishikori comment board and formats it a
 錦織実況掲示板　Nishikori comment board
 https://jbbs.shitaraba.net/sports/34934/
 
+# Collected data
+Year2016-2018
+https://github.com/taikoma/NishikoriBoardData/tree/master/data
+
 # Match Data
 The csv file contains the following data.
 
