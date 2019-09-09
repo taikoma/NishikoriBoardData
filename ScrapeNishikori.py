@@ -11,23 +11,7 @@ from selenium.webdriver.common.action_chains import ActionChains
 from selenium.webdriver.support.select import Select
 import lxml.html
 import time
-
-if __name__ == "__main__":
-    text = readTextFile('nick-3r.txt')
-    text = preConvert(text)
-
-    #df = pd.DataFrame({'Tournament':[],'OpponentPlayer':[],'Set':[],'TotalGame':[], 'Server':[], 'WinLose':[],'FirstSecond':[], 'Cource':[], 'Speed':[], 'AceDbF':[]})
-    url = "https://jbbs.shitaraba.net/bbs/read.cgi/sports/34934/1547509776/"
-    df = scrape(url)
-    #df=textToDatabase("",df,text,'錦織圭vs.ニック・キリオス\n',0)
-
-    df = scoreToDataFrame(df)
-    df = df[~df.duplicated(
-        subset=['OpponentPlayer', 'Set', 'TotalGame', 'ScoreServer', 'ScoreReturner'])]
-    df = df.reset_index()
-    df.to_csv("201901Australian.csv")
-    print("end")
-
+import json
 
 def createIndex(temp):  # 重複データを避けるためにインデックスを作成
     index = []
@@ -71,7 +55,7 @@ def devideText(text1):  # 大会の中で何試合あるかをカウントする
     return opponentPlayers, array
 
 
-def initArray():
+def initArray():#配列の初期化
     totalGame = []
     server = []
     winLose = []
@@ -153,13 +137,9 @@ def matchToArrayTibreak(
         title):
     serverList = [anotherServer, lastServer]
     totalGame, server, winLose, firstSecond, cource, speed, ad, row, index, index2, opponentPlayer, setArray, tournament = initArray()  # 配列を初期化
-    #print(tiebreak)
-
-    #for i,dl in enumerate(tiebreak):
-    # print(tiebreak[0])#TB×○○××○○○○○(2b1102w842b901w1312w1w1181c118Dn1w1112c102)
+    
     devided = re.findall(pattern, tiebreak[0])
 
-    #print(devided)
     if(devided):
         serveList = re.sub(r'([0-9A-D][a-z])', r',\1', devided[0]
                            [len(devided[0]) - 1].replace(" ", ""))  # ()の中を分解する
@@ -174,8 +154,11 @@ def matchToArrayTibreak(
             if(i < len(serveList)):
                 t = serveList[i]
                 temp7 = re.search('[0-9A-D][a-z]', t)
-                dataSpeed = re.search('[0-9]{3}', t)
+                dataSpeed3 = re.search('[0-9]{3}', t)#サーブの速度を抽出　３桁のみになってしまっている
+                dataSpeed2 = re.search('[0-9]{2}', t)#サーブの速度を抽出　３桁のみになってしまっている
                 dataAD = re.search('[A-Z][a-z]', t)
+                dataSpeed=dataSpeed3
+                
             else:
                 t = ''
             tournament, opponentPlayer, setArray, totalGame, server, winLose, firstSecond, cource, speed, ad = addRowData(
@@ -205,24 +188,37 @@ def matchToArray(pattern, dataList, op, s, title):
         # [('1', '霧', '××○○○○', '1w120Ac1251c1312w1042b1072w108')]
         devided = re.findall(pattern, dl)
         if(devided):
+            
+            #print(devided[0][len(devided[0]) - 1])
+            sl=devided[0][len(devided[0]) - 1]
+            sl=sl.split(')')[0]
+            if '赤黄色' in sl:
+                sl=""
+            sl=sl.replace("2Do","Do")
+            sl=sl.replace("2Dn","Dn")
             serveList = re.sub(r'([0-9A-D][a-z])',
                                r',\1',
-                               devided[0][len(devided[0]) - 1].replace(" ",
-                                                                       ""))  # ()の中を分解する
+                               sl.replace(" ",""))  # ()の中を分解する
             serveList = re.sub('^,', "", serveList)  # 先頭の,を削除
             serveList = serveList.split(",")
             dataGame = devided[0][0]
             dataServer = devided[0][1]
             dataWonLostList = devided[0][2]
-
             j = 1
             k = 0
             for i, dwl in enumerate(dataWonLostList):  # サーブデータを分割して1つずつ処理
                 if(i < len(serveList)):
                     t = serveList[i]
                     temp7 = re.search('[0-9A-D][a-z]', t)
-                    dataSpeed = re.search('[0-9]{3}', t)
+                    dataSpeed3 = re.search('[0-9]{3}', t)#サーブの速度を抽出（3桁）
+                    dataSpeed2 = re.search('[0-9]{2}', t)#サーブの速度を抽出（2桁）
                     dataAD = re.search('[A-Z][a-z]', t)
+                    #print(t)
+                    if(dataSpeed3 is not None):
+                        dataSpeed=dataSpeed3
+                    else:
+                        dataSpeed=dataSpeed2
+                    #print(dataSpeed.group(0))
                 else:
                     t = ''
                 tournament, opponentPlayer, setArray, totalGame, server, winLose, firstSecond, cource, speed, ad = addRowData(
@@ -246,7 +242,7 @@ def matchToArray(pattern, dataList, op, s, title):
 
 def textToDatabase(title, df, text, op, s=1):  # テキストデータ全体を処理してデータベースに格納する
     text = preConvert(text)
-    print(text)
+    #print(text)
 
     totalGame, server, winLose, firstSecond, cource, speed, ad, row, index, index2, opponentPlayer, setArray, tournament = initArray()  # 配列を初期化
 
@@ -254,15 +250,15 @@ def textToDatabase(title, df, text, op, s=1):  # テキストデータ全体を�
     dataList = re.findall(
         r'G[0-9]+[一-龥].*\(?.*?\)?',
         text)  # サーブ記載行をすべて抽出してリスト化
-    print(dataList)
-    pattern = r'G([0-9]+)([一-龥]).*?([○|×]+)\(?(.*)?\)?'
+    #print(dataList)
+    pattern = r'G([0-9]+)([一-龥]).*?([○|×]+)\(?(.*)?\)'#pattern = r'G([0-9]+)([一-龥]).*?([○|×]+)\(?(.*)?\)?'
     df_add, lastGame, lastServer, serverList = matchToArray(
         pattern, dataList, op, s, title)
     df = df.append(df_add)
 
     anotherServerList = [s for s in serverList if lastServer not in s]
     #print(lastGame,lastServer,serverList,anotherServerList[0])
-    print(lastGame, lastServer, serverList)
+    #print(lastGame, lastServer, serverList)
 
     anotherServer = anotherServerList[0]
 
@@ -409,3 +405,31 @@ def scoreToDataFrame(df):
     df['WonA'] = wonA_array
     df['WonB'] = wonB_array
     return df
+
+def mile2km(x):
+    if(x!=''):
+        x=int(x)
+        x=(int)(1.60934*x)
+    return x
+
+if __name__ == "__main__":
+    
+    f = open("init.json", 'r')
+    json_data = json.load(f)
+
+    url = json_data['url']
+    output = json_data['outputfile']
+    unit = json_data['unit']
+    #url = "https://jbbs.shitaraba.net/bbs/read.cgi/sports/34934/1521822616/"
+    #output="20180324_Miami.csv"
+    
+    df = scrape(url)
+    df = scoreToDataFrame(df)
+    df = df[~df.duplicated(
+        subset=['OpponentPlayer', 'Set', 'TotalGame', 'ScoreServer', 'ScoreReturner'])]
+    df=df[df['ScoreServer']!='']
+    if(unit=="km"):
+        df['Speed']=df['Speed'].apply(mile2km)
+    df = df.reset_index()
+    df.to_csv(output)
+    print("end")
