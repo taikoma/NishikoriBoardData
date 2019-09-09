@@ -34,23 +34,25 @@ The Picture below is a screenshot of the csv file.
 - selenium
 - lxml.html
 - time
+- json
 
 # Usage
 1. Clone this repository or download ScrapeNishikori.py to your working directory.
 
-2. Before executing the ScrapeNishikori.py, open the file and edit the following two.
+2. Before executing the ScrapeNishikori.py, open the init.json file and edit url,outputfile, and unit km or mile.
+ if you input "km" in unit, The data of serve speed is multiplied by 1.6.
 
-3. Change to the url of the bulletin board you want to obtain data
-```python
-url = "https://jbbs.shitaraba.net/bbs/read.cgi/sports/34934/1547509776/"
+```
+{
+	"url":"https://jbbs.shitaraba.net/bbs/read.cgi/sports/34934/1521822616/",
+	"outputfile":"20180324_Miami.csv",
+	"unit":"km"
+	}
 ```
 
-4. Change the filename of the output file
-```python
-df.to_csv("201901Australian.csv")
-```
 
-5. Execute the script file
+
+3. Execute the script file
 ```terminal
 python ScrapeNishikori.py
 ```
