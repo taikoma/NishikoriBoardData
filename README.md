@@ -1,5 +1,6 @@
 # NishikoriBoardData
 This script gathers comment data of Kei Nishikori comment board and formats it as match data and outputs it as csv file.
+錦織圭選手の試合データをスクレイピングしてcsvファイルにまとめるスクリプト
 
 錦織実況掲示板　Nishikori comment board
 https://jbbs.shitaraba.net/sports/34934/
@@ -9,7 +10,7 @@ Collected Data is saved in csv format.
 
 Year2016-2019
 https://github.com/taikoma/NishikoriBoardData/tree/master/data
-
+収集した過去のサーブデータ(csvファイル)置き場
 
 # Match Data
 The csv file contains the following data.
@@ -59,3 +60,12 @@ The Picture below is a screenshot of the csv file.
 ```terminal
 python ScrapeNishikori.py
 ```
+
+# Blog
+[【Webスクレイピング】錦織圭実況掲示板のデータ記録（サーブコースや速度など）を抽出してまとめてみました](http://datatennis.net/archives/4425/)
+
+[錦織圭のサーブ速度データを去年の全米オープンのデータと比較してみた](http://datatennis.net/archives/5467/)
+
+[錦織選手のサーブデータ(コース・速度など)をダウンロードできるようにしました](http://datatennis.net/archives/4611/)
+
+
