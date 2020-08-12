@@ -1,5 +1,5 @@
 # NishikoriBoardData
-This script gathers comment data of Kei Nishikori comment board and formats it as match data and outputs it as csv file.
+This script gathers comment data of Kei Nishikori comment board and formats it as match data and outputs it as csv file.  
 錦織圭選手の試合データをスクレイピングしてcsvファイルにまとめるスクリプト
 
 錦織実況掲示板　Nishikori comment board
@@ -9,7 +9,7 @@ https://jbbs.shitaraba.net/sports/34934/
 Collected Data is saved in csv format.
 
 Year2016-2019
-https://github.com/taikoma/NishikoriBoardData/tree/master/data
+https://github.com/taikoma/NishikoriBoardData/tree/master/data  
 収集した過去のサーブデータ(csvファイル)置き場
 
 # Match Data
@@ -28,7 +28,7 @@ Point by point data.
 The Picture below is a screenshot of the csv file.
 ![default](https://user-images.githubusercontent.com/7829080/51440449-8634da80-1d0a-11e9-9282-b557f68e97af.jpg)
 
-# Requirement
+# Requirements
 - python3
 - urllib2
 - re
