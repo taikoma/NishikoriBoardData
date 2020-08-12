@@ -1,9 +1,9 @@
 # NishikoriBoardData
-This script gathers comment data of Kei Nishikori comment board and formats it as match data and outputs it as csv file.  
-錦織圭選手の試合データをスクレイピングしてcsvファイルにまとめるスクリプト
-
-錦織実況掲示板　Nishikori comment board
+錦錦織実況掲示板　Nishikori comment board
 https://jbbs.shitaraba.net/sports/34934/
+
+This script gathers comment data of Kei Nishikori comment board and formats it as match data and outputs it as csv file.  
+錦織実況掲示板のコメントデータ（錦織圭選手の試合データ）をスクレイピングしてcsvファイルにまとめるスクリプト
 
 # Collected data
 Collected Data is saved in csv format.
