@@ -34,7 +34,7 @@ The Picture below is a screenshot of the csv file.
 - re
 - unicodedata
 - pandas 
-- BeautifulSoup
+- beautifulsoup4
 - selenium
 - lxml.html
 - time
@@ -44,7 +44,7 @@ The Picture below is a screenshot of the csv file.
 1. Clone this repository or download ScrapeNishikori.py to your working directory.
 
 2. Before executing the ScrapeNishikori.py, open the init.json file and edit url,outputfile, and unit km or mile.
- if you input "km" in unit, The data of serve speed is multiplied by 1.6.
+ if you input "mile" in unit, The data of serve speed is multiplied by 1.6.
 
 ```
 {

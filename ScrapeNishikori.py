@@ -428,7 +428,7 @@ if __name__ == "__main__":
     df = df[~df.duplicated(
         subset=['OpponentPlayer', 'Set', 'TotalGame', 'ScoreServer', 'ScoreReturner'])]
     df=df[df['ScoreServer']!='']
-    if(unit=="km"):
+    if(unit=="mile"):
         df['Speed']=df['Speed'].apply(mile2km)
     df = df.reset_index()
     df.to_csv(output)
